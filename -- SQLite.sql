@@ -76,7 +76,7 @@ CREATE TABLE book (
 --index for title, author and isbn
 -- no need for id or isbn indexing since they are unique
 CREATE UNIQUE INDEX book_index
-on book (title, author, isbn);
+on book (title, author);
 
 CREATE INDEX title_index
 on book (title);
