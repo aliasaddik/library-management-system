@@ -1,6 +1,10 @@
 require('dotenv').config();
 const express = require('express');
 const app = express();
+const swaggerUI = require('swagger-ui-express');
+const swaggerSpec = require('./swagger');
+
+
 
 const sqlite3 = require('sqlite3');
 
@@ -17,12 +21,19 @@ let db = new sqlite3.Database("mydb.db" , (err) => {
 })
 
 // Include route files
-const folder1Route = require('./routes/folder1');
-const folder2Route = require('./routes/folder2');
+const books = require('./routes/books');
+const borrowing = require('./routes/borrowing');
+const users = require('./routes/users');
+
+app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 // Use routes
-app.use('/folder1', folder1Route);
-app.use('/folder2', folder2Route);
+app.use('/books', books);
+app.use('/borrowing', borrowing);
+app.use('/users', users);
+
+
+
 
 const port = process.env.PORT || 8002 ;
 app.listen(port, () => {
